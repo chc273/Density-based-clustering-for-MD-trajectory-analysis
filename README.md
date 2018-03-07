@@ -2,6 +2,7 @@
 This repo contains both k-means clustering algorithm and density-based clustering algorithm for analyzing trajectories of species diffusion obtained from molecular dynamics simulations. 
 
 
+
 `dct` contains matlab code of density-based clustering of trajectories (DCT) algorithm in Ref. [1].
 
 The algorithm is shown below. Note that the example is shown with Li trajectories, but the algorithm is general and can be applied to other trajectories or points in space in general. 
