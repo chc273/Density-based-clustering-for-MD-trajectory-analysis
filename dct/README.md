@@ -2,9 +2,9 @@
 
 This algorithm is based on the idea of density-based spatial clustering of applications with Noise (DBSCAN).
 
-Instead of computing individual particles, here we first convert the particle trajectories into spatial densities. Then, we select a density cutoff $\rho_0$ as a hypersurface to cut the spatial domains. 
+Instead of computing individual particles, here we first convert the particle trajectories into spatial densities. Then, we select a density cutoff $$\rho_0$$ as a hypersurface to cut the spatial domains. 
 
-$\rho_0$ is selected such that half of the particles are within the surface and the remaining are outside the surface. We can also tune the fraction to achieve better results.
+$$\rho_0$$ is selected such that half of the particles are within the surface and the remaining are outside the surface. We can also tune the fraction to achieve better results.
 
 The code is organized as follows:
 
