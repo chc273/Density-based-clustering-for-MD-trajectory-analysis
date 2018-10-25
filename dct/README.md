@@ -14,3 +14,5 @@ The code is organized as follows:
 4. `read_dump(filename)` reads lammps dump file that has a specific format "id, type, xu, yu, zu"
 5. `write_density(density, box, file)`, write `density` and its corresponding `box` to a `file` for vesta visualization. 
     
+## Reference
+[1] Chen, C., Lu, Z., & Ciucci, F. (2017). Data mining of molecular dynamics data reveals Li diffusion characteristics in garnet Li7La3Zr2O12. Scientific reports, 7, 40769.
