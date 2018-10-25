@@ -1,27 +1,27 @@
-function labs = compute_cluster_number(pointsT, cutoff)
-    msize = size(pointsT)
-
+function labs = compute_cluster_number(density, cutoff)
+    % Label the voxels in the density by the cutoff
+    msize = size(density)
     UNCLASSIFIED = 0 ;
     NOISE = -1;
     dim = numel(msize)
     if dim ==2
-        M = size(pointsT, 1);
-        N = size(pointsT, 2);
+        M = size(density, 1);
+        N = size(density, 2);
         L = M * N;
         points = zeros(L, 3);
         pointsnew = zeros(L, 3);
         for i = 1:M
             for j = 1:N
                 index = (i-1) * N +j;
-                points(index, :) = [ pointsT(i,j),i,j];  
+                points(index, :) = [ density(i,j),i,j];
             end
         end
     end
 
     if dim ==3
-        M = size(pointsT, 1);
-        N = size(pointsT, 2);
-        K = size(pointsT, 3);
+        M = size(density, 1);
+        N = size(density, 2);
+        K = size(density, 3);
         L = M*N*K;
         points = zeros(L, 4);
         pointsnew = zeros(L, 4);
@@ -29,43 +29,40 @@ function labs = compute_cluster_number(pointsT, cutoff)
             for j = 1:N
                 for l = 1:K
                     index = (i-1) * N*K +(j-1)*K +l;
-                    points(index, :) = [ pointsT(i,j,l),i,j,l];  
+                    points(index, :) = [density(i,j,l), i, j, l];
                 end
             end
         end    
     end
 
-fprintf('\n***************************\ndata conversion completed!\n***************************\n')
-labs = UNCLASSIFIED*ones(L,1);
-index = 1:L;
-noise = points(:,1) <cutoff & points(:,1) >0;
-zero_value = points(:,1) ==0;
+    fprintf('\n***************************\ndata conversion completed!\n***************************\n')
+    labs = UNCLASSIFIED*ones(L,1);
+    index = 1:L;
+    noise = points(:,1) <cutoff & points(:,1) >0;
+    zero_value = points(:,1) ==0;
 
-indexvalue = index(~(noise|zero_value));
-fprintf('Entries greater than cutoff: %d \n', numel(indexvalue));
-pointsnew(:,:) = points(:,:); % store the original data
+    indexvalue = index(~(noise|zero_value));
+    fprintf('Entries greater than cutoff: %d \n', numel(indexvalue));
+    pointsnew(:,:) = points(:,:); % store the original data
 
-labs(noise, :) = NOISE;
-labs(zero_value, :) = UNCLASSIFIED;
+    labs(noise, :) = NOISE;
+    labs(zero_value, :) = UNCLASSIFIED;
 
-% searched = [indexnoise; indexzero];
-% begin = indexvalue;
-clab = 1;
-while ~isempty(indexvalue)
-    start = indexvalue(1);
-    fprintf('%d th cluster begin\n',clab);
-    tic
-    found = find_all_neighbors_stack(pointsnew, start, msize, dim, cutoff);
-    indexvalue = setdiff(indexvalue, found);
-    labs(found) = clab;
-    fprintf('%d th cluster found\n', clab);
-    fprintf('size is %d\n', length(found));
-    toc
-    clab = clab + 1;
-    
-end
-
-
+    % searched = [indexnoise; indexzero];
+    % begin = indexvalue;
+    clab = 1;
+    while ~isempty(indexvalue)
+        start = indexvalue(1);
+        fprintf('%d th cluster begin\n',clab);
+        tic
+        found = find_all_neighbors_stack(pointsnew, start, msize, dim, cutoff);
+        indexvalue = setdiff(indexvalue, found);
+        labs(found) = clab;
+        fprintf('%d th cluster found\n', clab);
+        fprintf('size is %d\n', length(found));
+        toc
+        clab = clab + 1;
+    end
 end
 
 

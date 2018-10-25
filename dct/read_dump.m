@@ -1,5 +1,5 @@
-function readDump(filename)
-
+function read_dump(filename)
+    % read lammps dump file that has custom dump fields: id, type, xu, yu, zu
     count = 0;  
     fid = fopen(filename,'r');
 
@@ -25,9 +25,6 @@ function readDump(filename)
            [id, idindex] = sort(C1(:,1));
 
            atoms(:,:,count) =C1(idindex,:);
-       end   
-       if count>5000
-            break;
        end
     end
  

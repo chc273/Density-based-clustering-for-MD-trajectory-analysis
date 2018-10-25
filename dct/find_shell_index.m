@@ -1,20 +1,21 @@
-function idx_found = find_shell_index( density, id, N )
-% dim is the dimension
-% id is the starting index
-% N is the Nth shell
-msize = size(density);
-dim = max(size(msize));
-% list index to the dimensional index
-%     if dim == 2
-%         a = msize(1);
-%         b = msize(2);
-%         idx(2) = mod(id,b);
-%         idx(1) = (id - idx(2))/b +1;
-%         xmin = shift_position(idx(1) - N,a );
-%         xmax = shift_position(idx(1) + N,a);
-%         ymin = shift_position(idx(2) -N, b);
-%         ymax = shift_position(idx(2) +N, b);
-%     end
+function idx_found = find_shell_index(density, id, N)
+    % start from index id, find the indices of voxels that are Nth shell of id
+    % dim is the dimension
+    % id is the starting index
+    % N is the Nth shell
+    msize = size(density);
+    dim = max(size(msize));
+    % list index to the dimensional index
+    %     if dim == 2
+    %         a = msize(1);
+    %         b = msize(2);
+    %         idx(2) = mod(id,b);
+    %         idx(1) = (id - idx(2))/b +1;
+    %         xmin = shift_position(idx(1) - N,a );
+    %         xmax = shift_position(idx(1) + N,a);
+    %         ymin = shift_position(idx(2) -N, b);
+    %         ymax = shift_position(idx(2) +N, b);
+    %     end
     if dim ==3
         a = msize(1);
         b = msize(2);
@@ -39,7 +40,6 @@ dim = max(size(msize));
         idx_found = cubic_out(~ismember(cubic_out, cubic_in, 'rows'),:);
         idx_found = (idx_found(:,1)-1) * b*c + (idx_found(:,2)-1)*c +idx_found(:,3);
     end
-
 
 end
 
